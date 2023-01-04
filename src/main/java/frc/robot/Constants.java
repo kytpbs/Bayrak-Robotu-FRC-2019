@@ -1,12 +1,12 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
+
 public final class Constants{
     public static PWMSparkMax leftMotor1 = new PWMSparkMax(0);
     public static PWMSparkMax leftMotor2 = new PWMSparkMax(1);
@@ -19,5 +19,8 @@ public final class Constants{
     public static Joystick stick = new Joystick(0);
 
     public static Accelerometer accelerometer = new BuiltInAccelerometer();
-    
+
+    public static final String kDefaultAuto = "Default";
+    public static final String kCustomAuto = "My Auto";
+    public static final String kCameraAuto = "Camera Auto";
 }

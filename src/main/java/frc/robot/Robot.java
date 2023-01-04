@@ -5,7 +5,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import static frc.robot.Constants.*;
@@ -17,9 +16,6 @@ import static frc.robot.Constants.*;
  * project.
  */
 public class Robot extends TimedRobot {
-  private static final String kDefaultAuto = "Default";
-  private static final String kCustomAuto = "My Auto";
-  private static final String kCameraAuto = "Camera Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
@@ -31,7 +27,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-
+    
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     m_chooser.addOption("Camera Auto", kCameraAuto);
@@ -53,8 +49,9 @@ public class Robot extends TimedRobot {
     if (stick.getZ() == 0 && stick.getY() == 0) {
       SmartDashboard.putNumber("Y Accel: ", y_accel);
       SmartDashboard.putNumber("x Accel: ", x_accel);
-      driveTrain.arcadeDrive(y_accel/8, x_accel/8);
+      //driveTrain.arcadeDrive(y_accel/8, x_accel/8);
     }
+    SmartDashboard.updateValues();
   }
 
   /**
