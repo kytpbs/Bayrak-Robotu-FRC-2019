@@ -12,7 +12,7 @@ public class Event_Listener{
       NetworkTableInstance inst = NetworkTableInstance.getDefault();
 
       //get a reference to the subtable called "datatable"
-      NetworkTable datatable = inst.getTable("vision");
+      NetworkTable datatable = inst.getTable("Vision");
 
       //get a reference to key in "datatable" called "Y"
       NetworkTableEntry xEntry = datatable.getEntry("target_x");
