@@ -15,10 +15,12 @@ def main():
     width = camera['width']
     height = camera['height']
 
-    CameraServer.startAutomaticCapture()
+    cmserver = CameraServer()
 
-    input_stream = CameraServer.getVideo()
-    output_stream = CameraServer.putVideo('Processed', width, height)
+    cmserver.startAutomaticCapture()
+
+    input_stream = cmserver.getVideo()
+    output_stream = cmserver.putVideo('Processed', width, height)
 
     # Table for vision output information
     vision_nt = NetworkTables.getTable('Vision')
@@ -44,8 +46,9 @@ def main():
         hsv_img = cv2.cvtColor(input_img, cv2.COLOR_BGR2HSV)
         binary_img = cv2.inRange(hsv_img, (65, 65, 200), (85, 255, 255))
 
-        _, contour_list, _ = cv2.findContours(binary_img, mode=cv2.RETR_EXTERNAL, method=cv2.CHAIN_APPROX_SIMPLE)
-
+        # _, contour_list, _ = cv2.findContours(binary_img, mode=cv2.RETR_EXTERNAL, method=cv2.CHAIN_APPROX_SIMPLE)
+        contour_list, _ = cv2.findContours(binary_img, mode=cv2.RETR_EXTERNAL, method=cv2.CHAIN_APPROX_SIMPLE)
+        
         x_list = []
         y_list = []
 

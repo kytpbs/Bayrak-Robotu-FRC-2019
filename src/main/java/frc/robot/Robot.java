@@ -7,8 +7,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import static frc.robot.Constants.*;
 import frc.robot.Event_Listener;
+import static frc.robot.Constants.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -53,7 +53,6 @@ public class Robot extends TimedRobot {
       //driveTrain.arcadeDrive(y_accel/8, x_accel/8);
     }
     SmartDashboard.updateValues();
-    new Event_Listener().run();
   }
 
   /**
@@ -97,7 +96,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    driveTrain.arcadeDrive(stick.getY(), -stick.getZ());
+    driveTrain.arcadeDrive(stick.getY(), stick.getZ());
   }
 
   /** This function is called once when the robot is disabled. */
