@@ -54,8 +54,8 @@ public class Robot extends TimedRobot {
     double y_data = all_data[1];
     double random = all_data[2];
     System.out.print("x: " + x_data);
-    System.out.print("y: " + y_data);
-    System.out.print("Random from pi: " + random); //get random number from pi to test
+    System.out.print(" y: " + y_data);
+    System.out.println(" Random from pi: " + random); //get random number from pi to test
   }
 
   /**
