@@ -20,7 +20,9 @@ public final class Constants{
 
     public static Accelerometer accelerometer = new BuiltInAccelerometer();
 
-    public static final String kDefaultAuto = "Default";
-    public static final String kCustomAuto = "My Auto";
+    public static final String kDefaultAuto = "Timer Auto";
+    public static final String kGyroAuto = "Gyro Auto";
     public static final String kCameraAuto = "Camera Auto";
+    public static double x_default_double[] = new double[1280]; 
+    public static double y_default_double[] = new double[720]; 
 }
