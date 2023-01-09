@@ -25,4 +25,5 @@ public final class Constants{
     public static final String kCameraAuto = "Camera Auto";
     public static double x_default_double[] = new double[1280]; 
     public static double y_default_double[] = new double[720]; 
+    public static double z = 0;
 }

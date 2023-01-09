@@ -48,12 +48,14 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Y Accel: ", y_accel);
     SmartDashboard.putNumber("x Accel: ", x_accel);
     SmartDashboard.updateValues();
-    Event_Listener2 Events = new Event_Listener2();
+    Event_Listener Events = new Event_Listener();
     double all_data[] = Events.run();
     double x_data = all_data[0];
     double y_data = all_data[1];
+    double random = all_data[2];
     System.out.print("x: " + x_data);
     System.out.print("y: " + y_data);
+    System.out.print("Random from pi: " + random); //get random number from pi to test
   }
 
   /**
@@ -97,7 +99,17 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    driveTrain.arcadeDrive(stick.getY(), stick.getZ());
+    if (stick.getZ() != 1){
+      z = stick.getZ() * (0.7);
+    }
+    else if (stick.getZ() == -1) {
+      stick.getZ();
+    }
+    else {
+      z = stick.getZ();
+    }
+     
+    driveTrain.arcadeDrive(stick.getY(), z);
   }
 
   /** This function is called once when the robot is disabled. */
