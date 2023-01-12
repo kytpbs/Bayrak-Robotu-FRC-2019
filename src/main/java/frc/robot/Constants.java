@@ -20,10 +20,12 @@ public final class Constants{
 
     public static Accelerometer accelerometer = new BuiltInAccelerometer();
 
-    public static final String kDefaultAuto = "Timer Auto";
+    public static final String kTimedAuto = "Timer Auto";
     public static final String kGyroAuto = "Gyro Auto";
     public static final String kCameraAuto = "Camera Auto";
     public static double x_default_double[] = new double[1280]; 
     public static double y_default_double[] = new double[720]; 
     public static double z = 0;
+    public static Auto Automonus = new Auto();
+    public static Teleop teleop = new Teleop();
 }

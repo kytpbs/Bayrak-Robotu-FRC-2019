@@ -4,10 +4,24 @@
 
 package frc.robot;
 
+import static frc.robot.Constants.Automonus;
+import static frc.robot.Constants.accelerometer;
+import static frc.robot.Constants.driveTrain;
+import static frc.robot.Constants.kCameraAuto;
+import static frc.robot.Constants.kGyroAuto;
+import static frc.robot.Constants.kTimedAuto;
+import static frc.robot.Constants.stick;
+import static frc.robot.Constants.teleop;
+import static frc.robot.Constants.x_default_double;
+import static frc.robot.Constants.y_default_double;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import static frc.robot.Constants.*;
+import edu.wpi.first.networktables.EntryListenerFlags;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -27,7 +41,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    m_chooser.setDefaultOption("Timer Auto", kDefaultAuto);
+    m_chooser.setDefaultOption("Timer Auto", kTimedAuto);
     m_chooser.addOption("Gyro Auto", kGyroAuto);
     m_chooser.addOption("Camera Auto", kCameraAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
@@ -49,13 +63,14 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("x Accel: ", x_accel);
     SmartDashboard.updateValues();
     Event_Listener Events = new Event_Listener();
-    double all_data[] = Events.run();
-    double x_data = all_data[0];
-    double y_data = all_data[1];
-    double random = all_data[2];
-    System.out.print("x: " + x_data);
-    System.out.print(" y: " + y_data);
-    System.out.println(" Random from pi: " + random); //get random number from pi to test
+    NetworkTableInstance inst = NetworkTableInstance.getDefault();
+
+    NetworkTable datatable = inst.getTable("Vision");
+    NetworkTableEntry test_Entry = datatable.getEntry("test");
+    
+    inst.startClientTeam(7035);
+    double test = test_Entry.getDouble(0);
+    System.out.println(test);
   }
 
   /**
@@ -80,14 +95,14 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     switch (m_autoSelected) {
       case kGyroAuto:
-        // Put Gyro auto code here
+        Automonus.Gyro();
         break;
       case kCameraAuto:
-        // camera code
+        Automonus.Camera();
         break;
-      case kDefaultAuto:
+      case kTimedAuto:
       default:
-        // Put default auto code here
+        Automonus.Timed();
         break;
     }
   }
@@ -99,17 +114,12 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    if (stick.getZ() != 1){
-      z = stick.getZ() * (0.7);
-    }
-    else if (stick.getZ() == -1) {
-      stick.getZ();
-    }
-    else {
-      z = stick.getZ();
-    }
-     
-    driveTrain.arcadeDrive(stick.getY(), z);
+    teleop.drive();
+    teleop.button1();
+    teleop.button2();
+    teleop.button3();
+    teleop.button4();
+    teleop.button5();
   }
 
   /** This function is called once when the robot is disabled. */

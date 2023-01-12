@@ -1,5 +1,7 @@
 from cscore import CameraServer
 from networktables import NetworkTables
+from networktables import NetworkTablesInstance
+
 
 import cv2
 import json
@@ -17,14 +19,16 @@ def main():
     height = camera['height']
 
     cmserver = CameraServer()
-
     cmserver.startAutomaticCapture()
 
     input_stream = cmserver.getVideo()
     output_stream = cmserver.putVideo('Processed', width, height)
 
+    ntinst = NetworkTables.getDefault()
     # Table for vision output information
     vision_nt = NetworkTables.getTable('Vision')
+    ntinst.startServer()
+    vision_nt.startServer()
 
     # Allocating new images is very expensive, always try to preallocate
     img = np.zeros(shape=(240, 320, 3), dtype=np.uint8)
@@ -71,10 +75,12 @@ def main():
 
             x_list.append((center[0] - width / 2) / (width / 2))
             x_list.append((center[1] - width / 2) / (width / 2))
-
+        randint = random.randint(0,100)
+        print(randint)
         vision_nt.putNumberArray('target_x', x_list)
         vision_nt.putNumberArray('target_y', y_list)
-        vision_nt.putNumber('test', random.randint(0,100))
+        vision_nt.putNumber('test', randint)
+        ntinst.putNumber('test', randint)
 
         processing_time = time.time() - start_time
         fps = 1 / processing_time
