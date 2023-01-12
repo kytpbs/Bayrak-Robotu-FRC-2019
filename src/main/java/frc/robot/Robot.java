@@ -139,7 +139,7 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
     double y_accel = accelerometer.getY();
     double x_accel = accelerometer.getX();
-    driveTrain.arcadeDrive(y_accel*50, x_accel*50);
+    driveTrain.arcadeDrive(y_accel*100, -x_accel*100);
   }
 
   /** This function is called once when the robot is first started up. */

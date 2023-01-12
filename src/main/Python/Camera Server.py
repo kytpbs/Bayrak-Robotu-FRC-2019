@@ -26,10 +26,13 @@ def main():
 
     ntinst = NetworkTables.getDefault()
     # Table for vision output information
-    vision_nt = NetworkTables.getTable('Vision')
-    ntinst.startServer()
-    vision_nt.startServer()
-
+    try:
+        vision_nt = NetworkTables.getTable('Vision')
+        print("Got table")
+    except Exception:
+        print("Couldn't get table, crating new server")
+        vision_nt = NetworkTables.getDefault()
+        server = vision_nt.startServer()
     # Allocating new images is very expensive, always try to preallocate
     img = np.zeros(shape=(240, 320, 3), dtype=np.uint8)
 
@@ -81,6 +84,8 @@ def main():
         vision_nt.putNumberArray('target_y', y_list)
         vision_nt.putNumber('test', randint)
         ntinst.putNumber('test', randint)
+        server.putNumber('test', randint)
+
 
         processing_time = time.time() - start_time
         fps = 1 / processing_time
