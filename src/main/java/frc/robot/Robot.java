@@ -113,7 +113,11 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    double y_accel = accelerometer.getY();
+    double x_accel = accelerometer.getX();
+    driveTrain.arcadeDrive(y_accel*50, x_accel*50);
+  }
 
   /** This function is called once when the robot is first started up. */
   @Override
