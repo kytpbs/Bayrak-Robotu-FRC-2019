@@ -4,48 +4,44 @@ import edu.wpi.first.networktables.EntryListenerFlags;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import static frc.robot.Constants.x_default_double;
+import static frc.robot.Constants.y_default_double;
 
 public class Event_Listener{
-   
-   public void run() {
-      double[] values = new double[2];
-      //get the default instance of NetworkTables
-      NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    double x_value = 0;
+    double y_value = 0;
+    double test_value = 0;
+    public double[] run() {
+        NetworkTableInstance inst = NetworkTableInstance.getDefault();
 
-      //get a reference to the subtable called "datatable"
-      NetworkTable datatable = inst.getTable("Vision");
+        NetworkTable datatable = inst.getTable("Vision");
 
-      //get a reference to key in "datatable" called "Y"
-      NetworkTableEntry xEntry = datatable.getEntry("target_x");
-      NetworkTableEntry yEntry = datatable.getEntry("target_y");
-      inst.startClientTeam(190);
-      
-      //add an entry listener for changed values of "X", the lambda ("->" operator)
-      //defines the code that should run when "X" changes
-      datatable.addEntryListener("X", (table, key, entry, value, flags) -> {
-         System.out.println("X changed value: " + value.getValue());
-      }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
+        NetworkTableEntry xEntry = datatable.getEntry("target_x");
+        NetworkTableEntry yEntry = datatable.getEntry("target_y");
+        NetworkTableEntry test_Entry = datatable.getEntry("test");
+        
+        inst.startClientTeam(7035);
 
-      //add an entry listener for changed values of "Y", the lambda ("->" operator)
-      //defines the code that should run when "Y" changes
-      yEntry.addListener(event -> {
-         double y = event.getEntry().getDouble(0);
-         values[1] = y;
-         System.out.println("Y changed value: " + event.getEntry().getValue());
-      }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
+        
+        datatable.addEntryListener("X", (table, key, entry, value, flags) -> {
+        System.out.println("X changed value: " + value.getValue());
+        }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
 
-      xEntry.addListener(event -> {
-         double x = event.getEntry().getDouble(0); 
-         values[0] = x;
-         System.out.println("X changed value: " + event.getEntry().getValue());
-      }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
-      
-      try {
-         Thread.sleep(1);
-      } catch (InterruptedException ex) {
-         System.out.println("Interrupted");
-         Thread.currentThread().interrupt();
-         return;
-      }
-   }
+        yEntry.addListener(event -> {
+            System.out.println("Y changed value: " + event.getEntry().getValue());
+            double[] y_value = event.getEntry().getDoubleArray(y_default_double);
+        }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
+
+        xEntry.addListener(event -> {
+            System.out.println("X changed value: " + event.getEntry().getValue());
+            double[] x_value = event.getEntry().getDoubleArray(x_default_double);
+        }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
+
+        test_Entry.addListener(event -> {
+            System.out.println("X changed value: " + event.getEntry().getValue());
+            double test_value = event.getEntry().getDouble(0);
+        }, EntryListenerFlags.kNew | EntryListenerFlags.kUpdate);
+
+        return new double[]{x_value, y_value, test_value};
+    }
 }

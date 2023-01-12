@@ -5,6 +5,7 @@ import cv2
 import json
 import numpy as np
 import time
+import random
 
 
 def main():
@@ -73,6 +74,7 @@ def main():
 
         vision_nt.putNumberArray('target_x', x_list)
         vision_nt.putNumberArray('target_y', y_list)
+        vision_nt.putNumber('test', random.randint(0,100))
 
         processing_time = time.time() - start_time
         fps = 1 / processing_time

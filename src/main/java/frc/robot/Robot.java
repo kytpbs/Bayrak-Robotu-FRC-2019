@@ -7,7 +7,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Event_Listener;
 import static frc.robot.Constants.*;
 
 /**
@@ -28,9 +27,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    
-    m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-    m_chooser.addOption("My Auto", kCustomAuto);
+    m_chooser.setDefaultOption("Timer Auto", kDefaultAuto);
+    m_chooser.addOption("Gyro Auto", kGyroAuto);
     m_chooser.addOption("Camera Auto", kCameraAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
   }
@@ -47,12 +45,17 @@ public class Robot extends TimedRobot {
     driveTrain.arcadeDrive(stick.getZ(), stick.getY());
     double y_accel = accelerometer.getY();
     double x_accel = accelerometer.getX();
-    if (stick.getZ() == 0 && stick.getY() == 0) {
-      SmartDashboard.putNumber("Y Accel: ", y_accel);
-      SmartDashboard.putNumber("x Accel: ", x_accel);
-      //driveTrain.arcadeDrive(y_accel/8, x_accel/8);
-    }
+    SmartDashboard.putNumber("Y Accel: ", y_accel);
+    SmartDashboard.putNumber("x Accel: ", x_accel);
     SmartDashboard.updateValues();
+    Event_Listener Events = new Event_Listener();
+    double all_data[] = Events.run();
+    double x_data = all_data[0];
+    double y_data = all_data[1];
+    double random = all_data[2];
+    System.out.print("x: " + x_data);
+    System.out.print(" y: " + y_data);
+    System.out.println(" Random from pi: " + random); //get random number from pi to test
   }
 
   /**
@@ -76,8 +79,8 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     switch (m_autoSelected) {
-      case kCustomAuto:
-        // Put custom auto code here
+      case kGyroAuto:
+        // Put Gyro auto code here
         break;
       case kCameraAuto:
         // camera code
@@ -96,7 +99,17 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    driveTrain.arcadeDrive(stick.getY(), stick.getZ());
+    if (stick.getZ() != 1){
+      z = stick.getZ() * (0.7);
+    }
+    else if (stick.getZ() == -1) {
+      stick.getZ();
+    }
+    else {
+      z = stick.getZ();
+    }
+     
+    driveTrain.arcadeDrive(stick.getY(), z);
   }
 
   /** This function is called once when the robot is disabled. */
