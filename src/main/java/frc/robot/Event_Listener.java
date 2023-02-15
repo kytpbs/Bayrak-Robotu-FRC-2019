@@ -45,4 +45,13 @@ public class Event_Listener{
 
         return new double[]{x_value, y_value, test_value};
     }
+    public double test() {
+    NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    NetworkTable datatable = inst.getTable("Vision");
+    NetworkTableEntry test_Entry = datatable.getEntry("test");
+    
+    inst.startClientTeam(7035);
+    double value = test_Entry.getDouble(0);
+    return value;
+    }
 }

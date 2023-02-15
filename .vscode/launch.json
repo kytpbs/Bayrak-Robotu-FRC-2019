@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Launch PhotonVision",
+      "request": "launch",
+      "mainClass": "frc.robot.PhotonVision",
+      "projectName": "Bayrak Robotu FRC-2019"
+    },
+    {
+      "type": "java",
       "name": "Launch Main",
       "request": "launch",
       "mainClass": "frc.robot.Main",

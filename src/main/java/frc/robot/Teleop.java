@@ -4,31 +4,68 @@ import static frc.robot.Constants.stick;
 
 public class Teleop {
     public void drive() {
-        double z = stick.getZ();
-        if (stick.getZ() != 1) {
-            z = stick.getZ() * (0.7);
-        }
-          else if (stick.getZ() == -1) {
-            stick.getZ();
-        }
-          else {
-            z = stick.getZ();
-        }
-        driveTrain.arcadeDrive(stick.getY(), z);
+        driveTrain.arcadeDrive(stick.getY(), stick.getZ(),true);
     }
-    public void button1() {
+    public void buttons() {
+      if (stick.getRawButtonPressed(1)) {
+        Buttons.button1.pressed();
+      }
+      if (stick.getRawButtonReleased(1)) {
+        Buttons.button1.relased();
+      }
+      if (stick.getRawButtonPressed(2)) {
+        Buttons.button2.pressed();
+      }
+      if (stick.getRawButtonReleased(2)) {
+        Buttons.button2.relased();
+      }
+      if (stick.getRawButtonPressed(3)) {
+        Buttons.button3.pressed();
+      }
+      if (stick.getRawButtonReleased(3)) {
+        Buttons.button3.relased();
+      }
+      if (stick.getRawButtonPressed(4)) {
+        Buttons.button4.pressed();
+      }
+      if (stick.getRawButtonReleased(4)) {
+        Buttons.button4.relased();
+      }
+    }
 
-    }
-    public void button2() {
+  private static class Buttons {
+    static class button1 {
+      public static void pressed() {
+        
+      }
+      public static void relased() {
 
-    }
-    public void button3() {
+      }
+      }
+    static class button2 {
+      public static void pressed() {
 
-    }
-    public void button4() {
+      }
+      public static void relased() {
 
+      }
     }
-    public void button5() {
-      
+
+    static class button3 {
+      public static void pressed() {
+
+      }
+      public static void relased() {
+
+      }
     }
+    static class button4 {
+      public static void pressed() {
+        
+      }
+      public static void relased() {
+        
+      }
+    }
+  }
 }
